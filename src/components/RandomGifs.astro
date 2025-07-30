@@ -1,14 +1,9 @@
----
-// Astro component script (server-side)
----
-
 <!-- Container for random GIFs -->
 <div id="gif-container" class="fixed inset-0 pointer-events-none z-30">
   <!-- GIFs will be dynamically inserted here -->
 </div>
 
 <script>
-  // Client-side JavaScript
   const gifContainer = document.getElementById('gif-container');
   
   // Array of your GIF file names (place these in /public folder)
@@ -26,15 +21,63 @@
   
   // Store active GIFs to manage cleanup
   let activeGifs: HTMLImageElement[] = [];
-  
+
   function getRandomPosition() {
     const maxX = window.innerWidth - 150; // Assuming max gif width of 150px
     const maxY = window.innerHeight - 150; // Assuming max gif height of 150px
     
-    return {
-      x: Math.random() * Math.max(0, maxX),
-      y: Math.random() * Math.max(0, maxY)
-    };
+    // Get all text elements to avoid
+    const textElements = document.querySelectorAll('p, h1, h2');
+    const gifSize = 150; // Assumed gif size for collision detection
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    while (attempts < maxAttempts) {
+      const position = {
+        x: Math.random() * Math.max(0, maxX),
+        y: Math.random() * Math.max(0, maxY)
+      };
+      
+      // Check if this position overlaps with any text element
+      let hasCollision = false;
+      
+      for (const element of textElements) {
+        const rect = element.getBoundingClientRect();
+        
+        // Skip elements that are not visible or have no content
+        if (rect.width === 0 || rect.height === 0 || 
+            element.textContent.trim() === '' ||
+            getComputedStyle(element).display === 'none') {
+          continue;
+        }
+        
+        // Check for overlap with some padding
+        const padding = 20;
+        if (position.x < rect.right + padding && 
+            position.x + gifSize > rect.left - padding &&
+            position.y < rect.bottom + padding && 
+            position.y + gifSize > rect.top - padding) {
+          hasCollision = true;
+          break;
+        }
+      }
+      
+      if (!hasCollision) {
+        return position;
+      }
+      
+      attempts++;
+    }
+    
+    // Fallback: place in corners if no good position found
+    const corners = [
+      { x: 20, y: 20 }, // top-left
+      { x: maxX - 20, y: 20 }, // top-right
+      { x: 20, y: maxY - 20 }, // bottom-left
+      { x: maxX - 20, y: maxY - 20 } // bottom-right
+    ];
+    
+    return corners[Math.floor(Math.random() * corners.length)];
   }
   
   function getRandomGif() {
@@ -99,7 +142,7 @@
     for (let i = 0; i < 5; i++) {
       setTimeout(() => {
         showGif();
-      }, i * 200); // Stagger them slightly
+      }, (i * 200) + 1000); // Stagger them slightly
     }
     
     // Then continue showing 5 GIFs every 5 seconds
