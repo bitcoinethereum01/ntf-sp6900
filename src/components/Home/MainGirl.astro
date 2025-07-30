@@ -1,0 +1,16 @@
+<!-- MAIN GIRL -->
+<div id='main-girl' class="absolute bottom-0 -right-20 h-screen group">
+  <img
+    src="/gifs/spark-pink.gif"
+    class="opacity-0 group-hover:opacity-100 absolute top-0 left-0"
+  />
+  <img
+    src="/images/Girl01.1.webp"
+    class="h-screen group-hover:scale-105 group-hover:-rotate-6"
+  />
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  gsap.from('#main-girl', { bottom: '-100%',duration: 1 })
+</script>

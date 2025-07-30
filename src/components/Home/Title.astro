@@ -1,0 +1,19 @@
+<!-- TITLE -->
+<div class="w-[72rem] h-[18rem] absolute top-7 left-7">
+  <div
+    id="title-background"
+    class="bg-[#ffdd00] rounded-lg w-[72rem] h-[18rem]"
+  >
+  </div>
+  <div id="title" class="absolute -top-5 flex flex-row">
+    <img src="/gifs/pink-heart.gif" class="h-20 mt-5" />
+    <img src="/images/title.webp" class="h-28" />
+    <img src="/gifs/spark-pink.gif" class="h-20 mt-5" />
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  gsap.from("#title", { top: "-150px", duration: 1 });
+  gsap.from("#title-background", { scale: "0", duration: 1 });
+</script>

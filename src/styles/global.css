@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deluge-50: #f9f7fc;
+  --color-deluge-100: #f1eef9;
+  --color-deluge-200: #e5ddf1;
+  --color-deluge-300: #d1c2e5;
+  --color-deluge-400: #b69dd5;
+  --color-deluge-500: #9675c0;
+  --color-deluge-600: #7b57a4;
+  --color-deluge-700: #654586;
+  --color-deluge-800: #543a6e;
+  --color-deluge-900: #48335c;
+  --color-deluge-950: #2a1939;
+
+  --color-persian-pink-50: #fdf2f8;
+  --color-persian-pink-100: #fce7f3;
+  --color-persian-pink-200: #fccee7;
+  --color-persian-pink-300: #faa7d3;
+  --color-persian-pink-400: #f781bd;
+  --color-persian-pink-500: #ee4697;
+  --color-persian-pink-600: #de2474;
+  --color-persian-pink-700: #c0165b;
+  --color-persian-pink-800: #9f154b;
+  --color-persian-pink-900: #851641;
+  --color-persian-pink-950: #510623;
+
+
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}

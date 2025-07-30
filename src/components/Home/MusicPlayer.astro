@@ -1,0 +1,59 @@
+---
+import { SkipBack, SkipForward, Pause, Play } from "@lucide/astro";
+---
+
+<div
+  id="music-player"
+  class="w-48 p-4 rounded-md shadow-[4px_4px_0px_0px_#ff69b4] bg-white flex justify-between items-center absolute bottom-5 left-5"
+>
+  <button
+    class="rounded-full bg-pink-300 shadow-[2px_2px_0px_0px_#ff69b4] hover:bg-pink-400 p-2"
+  >
+    <SkipBack class="text-white w-5 h-5" />
+  </button>
+  <button
+    id="play-btn"
+    class="rounded-full bg-pink-300 shadow-[2px_2px_0px_0px_#ff69b4] hover:bg-pink-400 p-2"
+  >
+    <Pause class="text-white w-10 h-10 hidden" id="pause-icon" />
+    <Play class="text-white w-10 h-10" id="play-icon" />
+  </button>
+  <button
+    class="rounded-full bg-pink-300 shadow-[2px_2px_0px_0px_#ff69b4] hover:bg-pink-400 p-2"
+  >
+    <SkipForward class="text-white w-5 h-5" />
+  </button>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  gsap.from("#music-player", { bottom: "-90px", duration: 1 });
+
+  let isPlaying = false;
+
+  const playBtn = document.getElementById("play-btn");
+  const playIcon = document.getElementById("play-icon");
+  const pauseIcon = document.getElementById("pause-icon");
+  const video = document.getElementById(
+    "bg-with-music"
+  ) as HTMLVideoElement | null;
+
+  playBtn?.addEventListener("click", () => {
+    isPlaying = !isPlaying;
+
+    if (isPlaying) {
+      // Play video and show it
+      video?.play();
+      video?.classList.remove("hidden");
+      playIcon?.classList.add("hidden");
+      pauseIcon?.classList.remove("hidden");
+      console.log("Playing");
+    } else {
+      // Pause video and hide it
+      video?.pause();
+      video?.classList.add("hidden");
+      playIcon?.classList.remove("hidden");
+      pauseIcon?.classList.add("hidden");
+    }
+  });
+</script>

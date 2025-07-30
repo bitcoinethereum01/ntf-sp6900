@@ -1,0 +1,135 @@
+---
+// Astro component script (server-side)
+---
+
+<!-- Container for random GIFs -->
+<div id="gif-container" class="fixed inset-0 pointer-events-none z-30">
+  <!-- GIFs will be dynamically inserted here -->
+</div>
+
+<script>
+  // Client-side JavaScript
+  const gifContainer = document.getElementById('gif-container');
+  
+  // Array of your GIF file names (place these in /public folder)
+  const gifFiles = [
+    '/gifs/cat.gif',
+    '/gifs/maybe.gif', 
+    '/gifs/silly-me.gif',
+    '/gifs/witch-watch.gif'
+  ];
+  const animations = [
+    'motion-safe:animate-bounce',
+    'motion-safe:animate-pulse',
+    'motion-safe:animate-wiggle',
+  ];
+  
+  // Store active GIFs to manage cleanup
+  let activeGifs: HTMLImageElement[] = [];
+  
+  function getRandomPosition() {
+    const maxX = window.innerWidth - 150; // Assuming max gif width of 150px
+    const maxY = window.innerHeight - 150; // Assuming max gif height of 150px
+    
+    return {
+      x: Math.random() * Math.max(0, maxX),
+      y: Math.random() * Math.max(0, maxY)
+    };
+  }
+  
+  function getRandomGif() {
+    return gifFiles[Math.floor(Math.random() * gifFiles.length)];
+  }
+  
+  function createGifElement() {
+    const img = document.createElement('img');
+    const position = getRandomPosition();
+    const gifSrc = getRandomGif();
+    
+    img.src = gifSrc;
+    img.style.position = 'absolute';
+    img.style.left = position.x + 'px';
+    img.style.top = position.y + 'px';
+    img.style.width = 'auto';
+    img.style.height = 'auto';
+    img.style.maxWidth = '150px';
+    img.style.maxHeight = '150px';
+    img.style.zIndex = '1000';
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.5s ease-in-out';
+    img.className = animations[Math.floor(Math.random() * animations.length)]
+    
+    // Add random rotation for more chaos
+    const rotation = Math.random() * 360;
+    img.style.transform = `rotate(${rotation}deg)`;
+    
+    return img;
+  }
+  
+  function showGif() {
+    const gif = createGifElement();
+    
+    // Add to container
+    gifContainer?.appendChild(gif);
+    
+    // Fade in
+    setTimeout(() => {
+      gif.style.opacity = '1';
+    }, 100);
+    
+    // Store reference
+    activeGifs.push(gif);
+    
+    // Remove after 3 seconds (adjust as needed)
+    setTimeout(() => {
+      // Fade out
+      gif.style.opacity = '0';
+      
+      // Remove from DOM after fade
+      setTimeout(() => {
+        gif.remove();
+        // Remove from active array
+        activeGifs = activeGifs.filter(g => g !== gif);
+      }, 500);
+    }, 4000);
+  }
+  
+  function startGifShow() {
+    // Show 5 GIFs immediately
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        showGif();
+      }, i * 200); // Stagger them slightly
+    }
+    
+    // Then continue showing 5 GIFs every 5 seconds
+    setInterval(() => {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          showGif();
+        }, i * 200);
+      }
+    }, 5000);
+  }
+  
+  // Start when page loads
+  document.addEventListener('DOMContentLoaded', startGifShow);
+  
+  // Handle window resize to recalculate positions
+  window.addEventListener('resize', () => {
+    // Clear existing GIFs on resize to avoid positioning issues
+    activeGifs.forEach(gif => gif.remove());
+    activeGifs = [];
+  });
+</script>
+
+<style>
+  #gif-container {
+    overflow: hidden;
+  }
+  
+  #gif-container img {
+    user-select: none;
+    pointer-events: none;
+  }
+</style>

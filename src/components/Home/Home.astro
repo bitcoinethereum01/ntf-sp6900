@@ -1,0 +1,36 @@
+---
+import RandomGifs from "../RandomGifs.astro";
+import Content from "./Content.astro";
+import MainGirl from "./MainGirl.astro";
+import MusicPlayer from "./MusicPlayer.astro";
+import NavBar from "./NavBar.astro";
+import Title from "./Title.astro";
+---
+
+<div class="relative h-screen w-screen overflow-hidden">
+  <!-- VIDEO BACKGROUNDS -->
+  <video autoplay muted loop class="video-bg" id="bg-default">
+    <source src="/bg-default.mp4" type="video/mp4" />
+  </video>
+  <video loop class="video-bg hidden" id="bg-with-music">
+    <source src="/bg-with-music.mp4" type="video/mp4" />
+  </video>
+
+  <Title />
+  <Content />
+  <MainGirl />
+  <NavBar />
+  <MusicPlayer />
+  <RandomGifs />
+</div>
+
+<style>
+  .video-bg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+</style>
