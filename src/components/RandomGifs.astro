@@ -11,7 +11,27 @@
     '/gifs/cat.gif',
     '/gifs/maybe.gif', 
     '/gifs/silly-me.gif',
-    '/gifs/witch-watch.gif'
+    '/gifs/witch-watch.gif',
+    '/gifs/aikawa.gif',
+    '/gifs/anime-gab.gif',
+    '/gifs/anime-tiona.gif',
+    '/gifs/cat.gif',
+    '/gifs/celosa.gif',
+    '/gifs/cute.gif',
+    '/gifs/dandadan-anime.gif',
+    '/gifs/dandadan.gif',
+    '/gifs/elf-bride-nephelia.gif',
+    '/gifs/falling-stars-cutecore.gif',
+    '/gifs/himesaka-noa-wataten.gif',
+    '/gifs/hojo-shise.gif',
+    '/gifs/jashin-chan.gif',
+    '/gifs/kanikou-sister.gif',
+    '/gifs/maga-girl-guitar.gif',
+    '/gifs/maybe.gif',
+    '/gifs/nervous-manga.gif',
+    '/gifs/oshi-no-ko-oshi-noko.gif',
+    '/gifs/silly-me.gif',
+    '/gifs/witch-watch.gif',
   ];
   const animations = [
     'motion-safe:animate-bounce',
@@ -139,7 +159,7 @@
   
   function startGifShow() {
     // Show 5 GIFs immediately
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       setTimeout(() => {
         showGif();
       }, (i * 200) + 1000); // Stagger them slightly
@@ -147,7 +167,7 @@
     
     // Then continue showing 5 GIFs every 5 seconds
     setInterval(() => {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 10; i++) {
         setTimeout(() => {
           showGif();
         }, i * 200);
